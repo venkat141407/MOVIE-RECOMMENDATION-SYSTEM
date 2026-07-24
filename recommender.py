@@ -1,11 +1,54 @@
+import os
 import pickle
 import requests
 import config
 import re
 
-# Load trained data
+# ==========================
+# DOWNLOAD similarity.pkl IF MISSING
+# ==========================
+
+FILE_PATH = "similarity.pkl"
+
+if not os.path.exists(FILE_PATH):
+    print("Downloading similarity.pkl from Google Drive...")
+
+    FILE_ID = "1ixmBPlgjg0WESPfQle4Kvj3t-23Ix-_a"
+
+    session = requests.Session()
+
+    response = session.get(
+        "https://drive.google.com/uc?export=download",
+        params={"id": FILE_ID},
+        stream=True
+    )
+
+    token = None
+    for key, value in response.cookies.items():
+        if key.startswith("download_warning"):
+            token = value
+            break
+
+    if token:
+        response = session.get(
+            "https://drive.google.com/uc?export=download",
+            params={"id": FILE_ID, "confirm": token},
+            stream=True
+        )
+
+    with open(FILE_PATH, "wb") as f:
+        for chunk in response.iter_content(32768):
+            if chunk:
+                f.write(chunk)
+
+    print("Download completed.")
+
+# ==========================
+# LOAD TRAINED DATA
+# ==========================
+
 movies = pickle.load(open("movies.pkl", "rb"))
-similarity = pickle.load(open("similarity.pkl", "rb"))
+similarity = pickle.load(open(FILE_PATH, "rb"))
 
 
 def clean_title(title):
