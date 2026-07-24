@@ -11,7 +11,7 @@ top_movies = (
     ratings.groupby("movieId")
     .size()
     .sort_values(ascending=False)
-    .head(5000)
+    .head(1000)
     .index
 )
 
