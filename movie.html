@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Movie Recommendations
+{% endblock %}
+
+{% block content %}
+
+<h1 class="dashboard-title">🎬 AI Movie Recommendation</h1>
+
+<div class="search-box">
+
+    <form method="POST" autocomplete="off">
+
+        <input
+            type="text"
+            id="movie"
+            name="movie"
+            placeholder="Search Movie..."
+            required
+        >
+
+        <button type="submit">
+            Recommend
+        </button>
+
+        <div id="suggestions"></div>
+
+    </form>
+
+</div>
+
+{% if recommendations %}
+
+<div class="movie-grid">
+
+    {% for movie in recommendations %}
+
+    <div class="movie-card">
+
+        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+
+        <div class="movie-card-content">
+
+            <h3>{{ movie.title }}</h3>
+
+            <p class="rating">⭐ IMDb: {{ movie.rating }}</p>
+
+            <p><strong>🎭 Genre:</strong> {{ movie.genre }}</p>
+
+            <p class="year">📅 {{ movie.year }}</p>
+
+            <p>{{ movie.plot }}</p>
+
+            <div class="movie-actions">
+
+                <a href="{{ url_for('add_favorite', title=movie.title) }}"
+                   class="favorite-btn">
+                    ❤️ Favorite
+                </a>
+
+                <a href="{{ url_for('add_watchlist', title=movie.title) }}"
+                   class="watchlist-btn">
+                    📺 Watchlist
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}

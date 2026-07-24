@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Watchlist
+{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align:center;margin-bottom:30px;">
+    📺 My Watchlist
+</h1>
+
+{% if watchlist %}
+
+<div class="movies">
+
+{% for movie in watchlist %}
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h3>{{ movie.movie_title }}</h3>
+
+        <br>
+
+        <a
+            href="/remove_watchlist/{{ movie.id }}"
+            class="btn remove">
+            ❌ Remove
+        </a>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div style="text-align:center;margin-top:100px;">
+
+    <h2>No movies in your Watchlist 📺</h2>
+
+    <br>
+
+    <a
+        href="/recommend"
+        class="btn back">
+        🎬 Find Movies
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <div class="dashboard-hero">
+
+        <h1>🎬 Welcome, {{ username }}</h1>
+
+        <p>
+            Discover amazing movies with AI-powered recommendations.
+            Save your favorites and build your personal watchlist.
+        </p>
+
+    </div>
+
+    <div class="dashboard-cards">
+
+        <a href="{{ url_for('recommend_page') }}" class="dashboard-card">
+            <div class="card-icon">🎥</div>
+            <h2>Recommend Movies</h2>
+            <p>Get AI recommendations based on your favorite movies.</p>
+        </a>
+
+        <a href="{{ url_for('favorites') }}" class="dashboard-card">
+            <div class="card-icon">❤️</div>
+            <h2>Favorites</h2>
+            <p>View and manage your favorite movies.</p>
+        </a>
+
+        <a href="{{ url_for('watchlist') }}" class="dashboard-card">
+            <div class="card-icon">📺</div>
+            <h2>Watchlist</h2>
+            <p>Keep track of movies you want to watch later.</p>
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="dashboard-card logout-card">
+            <div class="card-icon">🚪</div>
+            <h2>Logout</h2>
+            <p>Securely sign out from your account.</p>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
