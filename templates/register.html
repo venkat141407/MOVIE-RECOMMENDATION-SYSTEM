@@ -1,1 +1,62 @@
+{% extends "base.html" %}
 
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="auth-overlay"></div>
+
+    <div class="auth-card">
+
+        <h1>🎬 Movie AI</h1>
+        <h2>Create Account</h2>
+        <p>Join Movie AI and discover your next favorite movie.</p>
+
+        <form method="POST">
+
+            <div class="input-group">
+                <span>👤</span>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <span>📧</span>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <span>🔒</span>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                >
+            </div>
+
+            <button class="login-btn" type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
