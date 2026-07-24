@@ -6,30 +6,42 @@ from sklearn.metrics.pairwise import cosine_similarity
 movies = pd.read_csv("movies.csv")
 ratings = pd.read_csv("ratings.csv")
 
-# Merge movies with ratings
+# Get top 5000 most-rated movies
+top_movies = (
+    ratings.groupby("movieId")
+    .size()
+    .sort_values(ascending=False)
+    .head(5000)
+    .index
+)
+
+movies = movies[movies["movieId"].isin(top_movies)]
+ratings = ratings[ratings["movieId"].isin(top_movies)]
+
+# Merge
 data = movies.merge(ratings, on="movieId")
 
-# Create user-movie matrix
+# User-Movie Matrix
 movie_matrix = data.pivot_table(
     index="title",
     columns="userId",
-    values="rating"
+    values="rating",
+    fill_value=0
 )
 
-# Fill missing values with 0
-movie_matrix = movie_matrix.fillna(0)
+print("Movies used:", len(movie_matrix))
 
-# Calculate cosine similarity
+# Cosine Similarity
 similarity = cosine_similarity(movie_matrix)
 
-# Save movie titles
+# Save
 movie_titles = pd.DataFrame(movie_matrix.index, columns=["title"])
 
-# Save files
-pickle.dump(movie_titles, open("movies.pkl", "wb"))
-pickle.dump(similarity, open("similarity.pkl", "wb"))
+with open("movies.pkl", "wb") as f:
+    pickle.dump(movie_titles, f)
+
+with open("similarity.pkl", "wb") as f:
+    pickle.dump(similarity, f)
 
 print("✅ Model trained successfully!")
-print("Files created:")
-print(" - movies.pkl")
-print(" - similarity.pkl")
+print("Movies:", len(movie_titles))
