@@ -1,1 +1,84 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Favorites</title>
+
+    <style>
+        body{
+            font-family:Arial;
+            background:#121212;
+            color:white;
+            margin:0;
+            padding:30px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .card{
+            background:#1f1f1f;
+            padding:15px;
+            margin:15px auto;
+            width:500px;
+            border-radius:10px;
+        }
+
+        a{
+            color:white;
+            text-decoration:none;
+        }
+
+        .remove{
+            color:red;
+            float:right;
+        }
+
+        .back{
+            display:block;
+            width:200px;
+            margin:30px auto;
+            text-align:center;
+            background:#2196f3;
+            padding:10px;
+            border-radius:8px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>❤️ My Favorites</h1>
+
+{% if favorites %}
+
+    {% for movie in favorites %}
+
+        <div class="card">
+
+            <h3>{{ movie.movie_title }}</h3>
+
+            <a
+                class="remove"
+                href="/remove_favorite/{{ movie.id }}">
+                Remove
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+<h2 style="text-align:center;">No favorite movies yet.</h2>
+
+{% endif %}
+
+<a class="back" href="/dashboard">
+⬅ Back to Dashboard
+</a>
+
+</body>
+</html>
